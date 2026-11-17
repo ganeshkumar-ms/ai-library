@@ -1205,9 +1205,9 @@ a {
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.8px;
-  color: #fbbf24;
-  background: rgba(245, 158, 11, 0.16);
-  border: 1px solid rgba(245, 158, 11, 0.45);
+  color: #94a3b8;
+  background: rgba(148, 163, 184, 0.12);
+  border: 1px solid rgba(148, 163, 184, 0.35);
   text-transform: uppercase;
 }
 
@@ -1225,16 +1225,16 @@ a {
   font-weight: 800;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  color: #fbbf24;
-  background: rgba(245, 158, 11, 0.18);
-  border: 1px solid rgba(245, 158, 11, 0.45);
+  color: #94a3b8;
+  background: rgba(148, 163, 184, 0.14);
+  border: 1px solid rgba(148, 163, 184, 0.35);
   padding: 1px 5px;
   border-radius: 4px;
   white-space: nowrap;
 }
 
 .underReviewCard {
-  border-bottom: 2px solid rgba(245, 158, 11, 0.35) !important;
+  border-bottom: 2px solid rgba(148, 163, 184, 0.35) !important;
 }
 
 
