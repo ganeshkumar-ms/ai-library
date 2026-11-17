@@ -42,32 +42,6 @@ const AGENTS = [
     sample: 'Master Services Agreement dated November 2026 between Acme Financial and Horizon Global regarding cloud modernization.',
   },
   {
-    id: 'bridge',
-    name: 'BRIDGE',
-    prefix: 'BRG',
-    role: 'CMS Content & Schema Migrator',
-    summary: 'Automate schema mappings and transformations for modern headless CMS.',
-    categories: ['Structure'],
-    chips: ['CMS mapping', 'Migration', 'Structure'],
-    endpoint: 'https://hjwkic438k.execute-api.us-east-1.amazonaws.com/api/migrate',
-    live_url: 'https://d23utb1q5zn42x.cloudfront.net',
-    field: 'content',
-    sample: 'Blog article draft with title, author, publishDate, and body html content to migrate to Contentful.',
-  },
-  {
-    id: 'grid',
-    name: 'GRID',
-    prefix: 'GRD',
-    role: 'Content Model Architect',
-    summary: 'Deconstruct monolithic templates into modular component graphs.',
-    categories: ['Structure'],
-    chips: ['Content model', 'Schema', 'Reuse'],
-    endpoint: 'https://khag22rlna.execute-api.us-east-1.amazonaws.com/api/model',
-    live_url: 'https://d2w2zkazeq82no.cloudfront.net',
-    field: 'content',
-    sample: 'Product Landing Page template with Hero Banner, Customer Testimonial Grid, Feature Matrix, and Pricing Table.',
-  },
-  {
     id: 'adapta',
     name: 'ADAPTA',
     prefix: 'ADP',
@@ -144,6 +118,34 @@ const AGENTS = [
     live_url: 'https://duwz8hk1atmbr.cloudfront.net',
     field: 'text',
     sample: 'Enterprise Information Security Policy covering MFA and ISO 27001 controls.',
+  },
+  {
+    id: 'bridge',
+    name: 'BRIDGE',
+    prefix: 'BRG',
+    role: 'CMS Content & Schema Migrator (Under Review)',
+    summary: 'Automate schema mappings and transformations for modern headless CMS. (Under Review)',
+    categories: ['Structure'],
+    chips: ['CMS mapping', 'Migration', 'Under Review'],
+    endpoint: 'https://hjwkic438k.execute-api.us-east-1.amazonaws.com/api/migrate',
+    live_url: 'https://d23utb1q5zn42x.cloudfront.net',
+    field: 'content',
+    sample: 'Blog article draft with title, author, publishDate, and body html content to migrate to Contentful.',
+    under_review: true,
+  },
+  {
+    id: 'grid',
+    name: 'GRID',
+    prefix: 'GRD',
+    role: 'Content Model Architect (Under Review)',
+    summary: 'Deconstruct monolithic templates into modular component graphs. (Under Review)',
+    categories: ['Structure'],
+    chips: ['Content model', 'Schema', 'Under Review'],
+    endpoint: 'https://khag22rlna.execute-api.us-east-1.amazonaws.com/api/model',
+    live_url: 'https://d2w2zkazeq82no.cloudfront.net',
+    field: 'content',
+    sample: 'Product Landing Page template with Hero Banner, Customer Testimonial Grid, Feature Matrix, and Pricing Table.',
+    under_review: true,
   },
 ]
 
@@ -272,8 +274,15 @@ export default function App() {
               {filteredAgents.map((agent, i) => (
                 <article key={agent.id} className="slide">
                   <div>
-                    <div className="kicker">AI AGENT LIBRARY · PRODUCTION READY</div>
-                    <h2>{agent.name}</h2>
+                    <div className="kicker">
+                      {agent.under_review ? 'AI AGENT LIBRARY · UNDER REVIEW' : 'AI AGENT LIBRARY · PRODUCTION READY'}
+                    </div>
+                    <div className="heroTitleRow">
+                      <h2>{agent.name}</h2>
+                      {agent.under_review && (
+                        <span className="underReviewBadge">UNDER REVIEW</span>
+                      )}
+                    </div>
                     <div className="role">{agent.role}</div>
                     <p>
                       {agent.summary} Open the live workspace directly, or use the interactive implementation guide for package downloads and API integration.
@@ -353,7 +362,7 @@ export default function App() {
                 key={agent.id}
                 role="button"
                 tabIndex={0}
-                className={`card ${idx === safeIndex ? 'active' : ''}`}
+                className={`card ${idx === safeIndex ? 'active' : ''} ${agent.under_review ? 'underReviewCard' : ''}`}
                 onClick={() => handleLaunchWorkspace(agent)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
@@ -363,7 +372,12 @@ export default function App() {
                 }}
               >
                 <div className="agentText">
-                  <b>{agent.name}</b>
+                  <div className="cardTitleRow">
+                    <b>{agent.name}</b>
+                    {agent.under_review && (
+                      <span className="underReviewPill">UNDER REVIEW</span>
+                    )}
+                  </div>
                   <div className="agentRole">{agent.role}</div>
                 </div>
                 <span className="cardAction">OPEN →</span>

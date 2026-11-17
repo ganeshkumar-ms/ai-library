@@ -1183,4 +1183,59 @@ a {
   filter: brightness(1.1);
 }
 
+/* ======================================================== */
+/* UNDER REVIEW INDICATORS FOR BRIDGE & GRID IN AI-LIBRARY */
+/* ======================================================== */
+.heroTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.heroTitleRow h2 {
+  margin: 0;
+}
+
+.underReviewBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  text-transform: uppercase;
+}
+
+.cardTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  width: 100%;
+}
+
+.underReviewPill {
+  display: inline-block;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.18);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  padding: 1px 5px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.underReviewCard {
+  border-bottom: 2px solid rgba(245, 158, 11, 0.35) !important;
+}
+
+
 
