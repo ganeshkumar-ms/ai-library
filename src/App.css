@@ -1097,6 +1097,135 @@ a {
   color: #ffffff;
 }
 
+.wsBtnGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ============================================================
+   RESPONSIVE WORKSPACE & GUIDE BAR
+   ============================================================ */
+@media (max-width: 900px) {
+  .workspaceControlBar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 10px 14px !important;
+    gap: 10px !important;
+    min-height: auto !important;
+  }
+
+  .wsLeft {
+    width: 100% !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+  }
+
+  .wsDivider {
+    display: none !important;
+  }
+
+  .wsRole {
+    display: none !important;
+  }
+
+  .wsRight {
+    width: 100% !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+
+  .wsSelectorGroup {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  .wsSelectLabel {
+    flex-shrink: 0 !important;
+    font-size: 11px !important;
+  }
+
+  .wsSelectorGroup select {
+    flex: 1 !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+  }
+
+  .wsBtnGroup {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .wsGuideBtn,
+  .wsExtBtn {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    padding: 7px 10px !important;
+    font-size: 11.5px !important;
+    box-sizing: border-box !important;
+  }
+
+  .guideTopNav {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .agentSelector {
+    width: 100% !important;
+  }
+
+  .agentSelector select {
+    flex: 1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .workspaceControlBar {
+    padding: 8px 10px !important;
+    gap: 8px !important;
+  }
+
+  .wsBackBtn {
+    padding: 6px 10px !important;
+    font-size: 11.5px !important;
+  }
+
+  .wsBadge {
+    display: none !important;
+  }
+
+  .wsName {
+    font-size: 14px !important;
+  }
+
+  .wsSelectorGroup {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+  }
+
+  .wsSelectLabel {
+    font-size: 10.5px !important;
+  }
+
+  .wsBtnGroup {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 .workspaceFrameContainer {
   width: 100%;
   height: calc(100vh - 46px) !important;

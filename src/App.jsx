@@ -410,23 +410,25 @@ export default function App() {
                 </select>
               </div>
 
-              <button
-                className="wsGuideBtn"
-                type="button"
-                onClick={() => handleOpenGuide(activeWorkspaceAgent)}
-              >
-                Implementation Guide
-              </button>
+              <div className="wsBtnGroup">
+                <button
+                  className="wsGuideBtn"
+                  type="button"
+                  onClick={() => handleOpenGuide(activeWorkspaceAgent)}
+                >
+                  Implementation Guide
+                </button>
 
-              <a
-                className="wsExtBtn"
-                href={activeWorkspaceAgent.live_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={`Open ${activeWorkspaceAgent.name} in a separate tab`}
-              >
-                Open Standalone ↗
-              </a>
+                <a
+                  className="wsExtBtn"
+                  href={activeWorkspaceAgent.live_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={`Open ${activeWorkspaceAgent.name} in a separate tab`}
+                >
+                  Open Standalone ↗
+                </a>
+              </div>
             </div>
           </div>
 
