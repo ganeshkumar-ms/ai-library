@@ -21,7 +21,7 @@ const AGENTS = [
     prefix: 'LNS',
     role: 'Content Reviewer & Consistency Auditor',
     summary: 'Audit documents for clarity, contradictions, and readiness before going live.',
-    categories: ['Content'],
+    categories: ['Structure'],
     chips: ['Review', 'Quality', 'Consistency'],
     endpoint: 'https://9h9cdk5cxi.execute-api.us-east-1.amazonaws.com/api/review',
     live_url: 'https://d1hwt5aw0fwzod.cloudfront.net',
