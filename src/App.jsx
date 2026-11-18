@@ -21,7 +21,7 @@ const AGENTS = [
     prefix: 'LNS',
     role: 'Content Reviewer & Consistency Auditor',
     summary: 'Audit documents for clarity, contradictions, and readiness before going live.',
-    categories: ['Content', 'Governance'],
+    categories: ['Content'],
     chips: ['Review', 'Quality', 'Consistency'],
     endpoint: 'https://9h9cdk5cxi.execute-api.us-east-1.amazonaws.com/api/review',
     live_url: 'https://d1hwt5aw0fwzod.cloudfront.net',
@@ -73,7 +73,7 @@ const AGENTS = [
     prefix: 'SRT',
     role: 'Content Classifier & Ambiguity Router',
     summary: 'Classify content into enterprise operational categories with ambiguity detection.',
-    categories: ['Governance'],
+    categories: ['Content', 'Structure'],
     chips: ['Classify', 'Routing', 'Labels'],
     endpoint: 'https://n6r7yo1mvl.execute-api.us-east-1.amazonaws.com/api/classify',
     live_url: 'https://d33u4991ehrqv3.cloudfront.net',
@@ -86,7 +86,7 @@ const AGENTS = [
     prefix: 'ECH',
     role: 'Semantic Document Comparator',
     summary: 'Surface semantic and clause-level changes across document versions.',
-    categories: ['Governance'],
+    categories: ['Content'],
     chips: ['Compare', 'Changes', 'Versions'],
     endpoint: 'https://22s6be3850.execute-api.us-east-1.amazonaws.com/api/compare',
     live_url: 'https://d2e3xsh5ciq5sx.cloudfront.net',
@@ -112,7 +112,7 @@ const AGENTS = [
     prefix: 'TXR',
     role: 'Enterprise Taxonomy & Governance Agent',
     summary: 'Build consistent enterprise taxonomies and hierarchical classifications.',
-    categories: ['Structure', 'Governance'],
+    categories: ['Structure'],
     chips: ['Taxonomy', 'Hierarchy', 'Governance'],
     endpoint: 'https://yvw8dqk6c2.execute-api.us-east-1.amazonaws.com/api/taxonomize',
     live_url: 'https://duwz8hk1atmbr.cloudfront.net',
@@ -246,7 +246,7 @@ export default function App() {
         <main>
           {/* Category Tabs */}
           <nav className="cats">
-            {['All', 'Content', 'Structure', 'Experience', 'Governance'].map(cat => (
+            {['All', 'Content', 'Structure', 'Experience'].map(cat => (
               <button
                 key={cat}
                 className={activeCategory === cat ? 'active' : ''}
