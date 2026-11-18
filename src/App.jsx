@@ -157,6 +157,10 @@ export default function App() {
   const [guideAgent, setGuideAgent] = useState(AGENTS[0])
   const [guideTab, setGuideTab] = useState('package') // 'package' | 'api'
   const [copiedKey, setCopiedKey] = useState('')
+  const [apiBodyDraft, setApiBodyDraft] = useState('')
+  const [apiTestFile, setApiTestFile] = useState(null)
+  const [apiTesting, setApiTesting] = useState(false)
+  const [apiTestResult, setApiTestResult] = useState(null)
   const timerRef = useRef(null)
 
   const filteredAgents = activeCategory === 'All'
@@ -199,8 +203,83 @@ export default function App() {
 
   function handleOpenGuide(agent) {
     setGuideAgent(agent)
+    setApiBodyDraft(JSON.stringify({ [agent.field]: agent.sample }, null, 2))
+    setApiTestFile(null)
+    setApiTestResult(null)
     setView('guide')
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  async function handleExecuteApiTest(mode = 'post') {
+    if (!guideAgent?.endpoint) return
+    setApiTesting(true)
+    const t0 = performance.now()
+    try {
+      let url = guideAgent.endpoint
+      let opts = { method: 'POST' }
+
+      if (mode === 'health') {
+        const origin = new URL(guideAgent.endpoint).origin
+        url = `${origin}/api/health`
+        opts = { method: 'GET' }
+      } else if (apiTestFile) {
+        const fd = new FormData()
+        fd.append('file', apiTestFile)
+        try {
+          const parsed = JSON.parse(apiBodyDraft || '{}')
+          if (parsed[guideAgent.field]) {
+            fd.append(guideAgent.field, parsed[guideAgent.field])
+          }
+        } catch {
+          if (apiBodyDraft.trim()) fd.append(guideAgent.field, apiBodyDraft.trim())
+        }
+        opts = { method: 'POST', body: fd }
+      } else {
+        let payloadStr = apiBodyDraft
+        try {
+          payloadStr = JSON.stringify(JSON.parse(apiBodyDraft || '{}'))
+        } catch {
+          payloadStr = JSON.stringify({ [guideAgent.field]: apiBodyDraft })
+        }
+        opts = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: payloadStr,
+        }
+      }
+
+      const resp = await fetch(url, opts)
+      const ms = Math.round(performance.now() - t0)
+      const rawText = await resp.text()
+      let formatted = rawText
+      try {
+        formatted = JSON.stringify(JSON.parse(rawText), null, 2)
+      } catch {
+        // keep raw text
+      }
+      setApiTestResult({
+        ok: resp.ok,
+        status: resp.status,
+        statusText: resp.statusText || (resp.ok ? 'OK' : 'Error'),
+        ms,
+        url,
+        contentType: resp.headers.get('content-type') || 'application/json',
+        body: formatted,
+      })
+    } catch (err) {
+      const ms = Math.round(performance.now() - t0)
+      setApiTestResult({
+        ok: false,
+        status: 0,
+        statusText: 'Network / CORS Error',
+        ms,
+        url: guideAgent.endpoint,
+        contentType: 'text/plain',
+        body: err?.message || 'Request failed.',
+      })
+    } finally {
+      setApiTesting(false)
+    }
   }
 
   function handleLaunchWorkspace(agent) {
@@ -643,13 +722,109 @@ LOG_LEVEL=INFO`}</pre>
                   <span className="methodBadge">POST</span>
                   <span className="endpointUrl">{guideAgent.endpoint}</span>
                 </div>
-                <button
-                  className="copyBtn"
-                  onClick={() => copyText(guideAgent.endpoint, 'ep')}
-                  type="button"
-                >
-                  {copiedKey === 'ep' ? 'Copied ✓' : 'Copy Endpoint'}
-                </button>
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                  <button
+                    className="copyBtn"
+                    onClick={() => handleExecuteApiTest('health')}
+                    disabled={apiTesting}
+                    type="button"
+                  >
+                    Health Check (GET)
+                  </button>
+                  <button
+                    className="copyBtn"
+                    onClick={() => copyText(guideAgent.endpoint, 'ep')}
+                    type="button"
+                  >
+                    {copiedKey === 'ep' ? 'Copied ✓' : 'Copy Endpoint'}
+                  </button>
+                </div>
+              </div>
+
+              {/* Swagger-Style Live API Tester */}
+              <div className="swaggerBox">
+                <div className="swaggerHead">
+                  <div className="swaggerTitleRow">
+                    <span className="methodBadge">TRY IT OUT</span>
+                    <strong>Interactive API Explorer (Live Endpoint Test)</strong>
+                  </div>
+                  <button
+                    type="button"
+                    className="copyBtn"
+                    onClick={() => {
+                      setApiBodyDraft(JSON.stringify({ [guideAgent.field]: guideAgent.sample }, null, 2))
+                      setApiTestFile(null)
+                      setApiTestResult(null)
+                    }}
+                  >
+                    Reset Sample
+                  </button>
+                </div>
+
+                <div className="swaggerBody">
+                  <div className="swaggerFieldLabel">
+                    <span>Request Body (application/json)</span>
+                    <label className="swaggerFileLabel">
+                      <input
+                        type="file"
+                        style={{ display: 'none' }}
+                        onChange={e => setApiTestFile(e.target.files?.[0] || null)}
+                      />
+                      <span>{apiTestFile ? `Attached: ${apiTestFile.name}` : '+ Optional File (multipart/form-data)'}</span>
+                    </label>
+                    {apiTestFile && (
+                      <button
+                        type="button"
+                        className="copyBtn"
+                        style={{ padding: '3px 8px', fontSize: '10px' }}
+                        onClick={() => setApiTestFile(null)}
+                      >
+                        Clear File
+                      </button>
+                    )}
+                  </div>
+
+                  <textarea
+                    className="swaggerTextarea"
+                    rows={5}
+                    value={apiBodyDraft}
+                    onChange={e => setApiBodyDraft(e.target.value)}
+                    spellCheck={false}
+                  />
+
+                  <div className="swaggerActions">
+                    <button
+                      type="button"
+                      className="swaggerExecBtn"
+                      onClick={() => handleExecuteApiTest('post')}
+                      disabled={apiTesting}
+                    >
+                      {apiTesting ? 'Executing Request...' : 'Execute Live Request ↗'}
+                    </button>
+                  </div>
+
+                  {apiTestResult && (
+                    <div className="swaggerResp">
+                      <div className="swaggerRespHead">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                          <span className={`swaggerStatus ${apiTestResult.ok ? 'ok' : 'err'}`}>
+                            {apiTestResult.status} {apiTestResult.statusText}
+                          </span>
+                          <span className="swaggerMeta">{apiTestResult.ms} ms</span>
+                          <span className="swaggerMeta">{apiTestResult.contentType}</span>
+                        </div>
+                        <button
+                          type="button"
+                          className="copyBtn"
+                          onClick={() => copyText(apiTestResult.body, 'resp')}
+                        >
+                          {copiedKey === 'resp' ? 'Copied ✓' : 'Copy Response'}
+                        </button>
+                      </div>
+                      <pre className="swaggerRespPre">{apiTestResult.body}</pre>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* 4 Steps */}
