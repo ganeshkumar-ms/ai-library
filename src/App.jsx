@@ -123,10 +123,10 @@ const AGENTS = [
     id: 'bridge',
     name: 'BRIDGE',
     prefix: 'BRG',
-    role: 'CMS Content & Schema Migrator (Under Review)',
-    summary: 'Automate schema mappings and transformations for modern headless CMS. (Under Review)',
+    role: 'CMS Content & Schema Migrator',
+    summary: 'Automate schema mappings and transformations for modern headless CMS.',
     categories: ['Structure'],
-    chips: ['CMS mapping', 'Migration', 'Under Review'],
+    chips: ['CMS mapping', 'Migration', 'Schema'],
     endpoint: 'https://hjwkic438k.execute-api.us-east-1.amazonaws.com/api/migrate',
     live_url: 'https://d23utb1q5zn42x.cloudfront.net',
     field: 'content',
@@ -137,10 +137,10 @@ const AGENTS = [
     id: 'grid',
     name: 'GRID',
     prefix: 'GRD',
-    role: 'Content Model Architect (Under Review)',
-    summary: 'Deconstruct monolithic templates into modular component graphs. (Under Review)',
+    role: 'Content Model Architect',
+    summary: 'Deconstruct monolithic templates into modular component graphs.',
     categories: ['Structure'],
-    chips: ['Content model', 'Schema', 'Under Review'],
+    chips: ['Content model', 'Schema', 'Components'],
     endpoint: 'https://khag22rlna.execute-api.us-east-1.amazonaws.com/api/model',
     live_url: 'https://d2w2zkazeq82no.cloudfront.net',
     field: 'content',
@@ -229,13 +229,13 @@ export default function App() {
       {view !== 'workspace' && (
         <header className="top">
           <div className="logo" onClick={handleBackToLibrary}>
-            <b>AI</b> AGENT LIBRARY
+            <b>AI</b> AGENTS STORE
           </div>
           {view === 'library' ? (
-            <div className="meta">11 AGENTS · IMPLEMENTATION LIBRARY</div>
+            <div className="meta">AI FOR BUSINESS</div>
           ) : (
             <button className="backBtn" type="button" onClick={handleBackToLibrary}>
-              <span>←</span> BACK TO LIBRARY
+              <span>←</span> BACK TO STORE
             </button>
           )}
         </header>
@@ -275,7 +275,7 @@ export default function App() {
                 <article key={agent.id} className="slide">
                   <div>
                     <div className="kicker">
-                      {agent.under_review ? 'AI AGENT LIBRARY · UNDER REVIEW' : 'AI AGENT LIBRARY · PRODUCTION READY'}
+                      AI AGENTS STORE · AI FOR BUSINESS
                     </div>
                     <div className="heroTitleRow">
                       <h2>{agent.name}</h2>
@@ -314,7 +314,7 @@ export default function App() {
 
                   <div className="visual">
                     <div className="signature">
-                      <span>AGENT LIBRARY</span>
+                      <span>AI AGENTS STORE</span>
                       <strong>{agent.name}</strong>
                       <i />
                       <small>{agent.role}</small>
@@ -351,8 +351,8 @@ export default function App() {
             <b>Agent ribbon</b>
             <span>
               {activeCategory === 'All'
-                ? 'ALL 11 AGENTS'
-                : `${activeCategory.toUpperCase()} · ${filteredAgents.length} AGENTS`}
+                ? 'AI FOR BUSINESS'
+                : `${activeCategory.toUpperCase()} · AI FOR BUSINESS`}
             </span>
           </div>
 
@@ -395,9 +395,9 @@ export default function App() {
                 className="wsBackBtn"
                 onClick={handleBackToLibrary}
                 type="button"
-                title="Return to library catalog"
+                title="Return to AI Agents Store"
               >
-                ← Back to Library
+                ← Back to Store
               </button>
               <div className="wsDivider" />
               <div className="wsAgentMeta">
