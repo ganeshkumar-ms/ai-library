@@ -691,18 +691,18 @@ pause
           </div>
 
           {guideTab === 'package' ? (
-            /* TAB A: DOWNLOADABLE PACKAGE */
+            /* TAB A: DOWNLOADABLE APP & SDK */
             <section className="panel">
-              <h2>Use as a downloadable package</h2>
+              <h2>Download App &amp; SDK Bundle</h2>
               <p className="intro">
-                For teams that want the agent client SDK embedded inside their own codebase or CI/CD deployment pipeline.
+                Launch {guideAgent.name} directly as a standalone Windows Desktop App (`.bat`), run automated API checks, or embed the `.zip` SDK bundle into your project.
               </p>
 
               {/* Direct Download Banner */}
               <div className="downloadActionStrip">
                 <div className="downloadInfo">
-                  <b>{guideAgent.name} Agent SDK Distribution</b>
-                  <small>Version 1.0.0 · Python 3.9+ · Standalone Client + Quickstart Demo</small>
+                  <b>{guideAgent.name} App &amp; SDK Distribution</b>
+                  <small>Version 1.0.0 · Desktop App (.bat) · API Runner (.bat) · SDK Bundle (.zip)</small>
                 </div>
                 <div className="downloadBtnGroup">
                   <button
@@ -726,20 +726,6 @@ pause
                   >
                     SDK Bundle (.zip)
                   </a>
-                  <a
-                    className="btnDownloadSecondary"
-                    href={`downloads/${guideAgent.id}_agent-1.0.0-py3-none-any.whl`}
-                    download
-                  >
-                    Wheel (.whl)
-                  </a>
-                  <a
-                    className="btnDownloadSecondary"
-                    href={`downloads/${guideAgent.id}-agent-1.0.0.tar.gz`}
-                    download
-                  >
-                    Source (.tar.gz)
-                  </a>
                 </div>
               </div>
 
@@ -748,22 +734,22 @@ pause
                 <div className="step">
                   <span className="n">01</span>
                   <b>Download</b>
-                  <p>Get the `{guideAgent.id}-agent-1.0.0-sdk-bundle.zip` package directly above or via pip wheel.</p>
+                  <p>Click <strong>Download Desktop App (.bat)</strong> to run {guideAgent.name} as a standalone app, or grab the <strong>SDK Bundle (.zip)</strong>.</p>
                 </div>
                 <div className="step">
                   <span className="n">02</span>
-                  <b>Configure</b>
-                  <p>Copy `.env.example` to `.env` and set API endpoint, timeout, and AWS region.</p>
+                  <b>Launch App</b>
+                  <p>Double-click `{guideAgent.name}_Desktop_App.bat` to open {guideAgent.name} in a dedicated desktop window.</p>
                 </div>
                 <div className="step">
                   <span className="n">03</span>
-                  <b>Install</b>
-                  <p>Install minimal dependencies in an isolated virtual environment (`pip install -r requirements.txt`).</p>
+                  <b>Test API (.bat)</b>
+                  <p>Double-click `run_{guideAgent.id}_app.bat` to verify `/api/health` and run live requests from Command Prompt.</p>
                 </div>
                 <div className="step">
                   <span className="n">04</span>
-                  <b>Run</b>
-                  <p>Execute `python quickstart_example.py` to test live connectivity and parse trace verification codes.</p>
+                  <b>Integrate (.zip)</b>
+                  <p>Extract `{guideAgent.id}-agent-1.0.0-sdk-bundle.zip` and run `python quickstart_example.py` inside your codebase.</p>
                 </div>
               </div>
 
