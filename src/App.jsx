@@ -280,7 +280,7 @@ export default function App() {
                     <div className="heroTitleRow">
                       <h2>{agent.name}</h2>
                       {agent.under_review && (
-                        <span className="underReviewBadge">REVIEW</span>
+                        <span className="underReviewBadge">UNDER REVIEW</span>
                       )}
                     </div>
                     <div className="role">{agent.role}</div>
