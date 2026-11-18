@@ -294,6 +294,46 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  function buildDesktopAppBat(agent) {
+    if (!agent) return ''
+    return `@echo off
+title ${agent.name} - Desktop App
+set "APP_URL=${agent.live_url}"
+
+if exist "%ProgramFiles(x86)%\\Microsoft\\Edge\\Application\\msedge.exe" (
+  start "" "%ProgramFiles(x86)%\\Microsoft\\Edge\\Application\\msedge.exe" --app="%APP_URL%"
+  exit /b
+)
+if exist "%ProgramFiles%\\Microsoft\\Edge\\Application\\msedge.exe" (
+  start "" "%ProgramFiles%\\Microsoft\\Edge\\Application\\msedge.exe" --app="%APP_URL%"
+  exit /b
+)
+if exist "%ProgramFiles%\\Google\\Chrome\\Application\\chrome.exe" (
+  start "" "%ProgramFiles%\\Google\\Chrome\\Application\\chrome.exe" --app="%APP_URL%"
+  exit /b
+)
+if exist "%ProgramFiles(x86)%\\Google\\Chrome\\Application\\chrome.exe" (
+  start "" "%ProgramFiles(x86)%\\Google\\Chrome\\Application\\chrome.exe" --app="%APP_URL%"
+  exit /b
+)
+start "" "%APP_URL%"
+exit /b
+`
+  }
+
+  function handleDownloadDesktopApp(agent) {
+    const content = buildDesktopAppBat(agent)
+    const blob = new Blob([content.replace(/\r?\n/g, '\r\n')], { type: 'application/x-bat;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${agent.name}_Desktop_App.bat`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
+
   function buildAgentBatScript(agent) {
     if (!agent) return ''
     let healthUrl = agent.endpoint
@@ -668,9 +708,16 @@ pause
                   <button
                     type="button"
                     className="btnDownloadPrimary"
+                    onClick={() => handleDownloadDesktopApp(guideAgent)}
+                  >
+                    Download Desktop App (.bat) ↓
+                  </button>
+                  <button
+                    type="button"
+                    className="btnDownloadSecondary"
                     onClick={() => handleDownloadBat(guideAgent)}
                   >
-                    Download Runner (.bat) ↓
+                    API Runner (.bat)
                   </button>
                   <a
                     className="btnDownloadSecondary"
