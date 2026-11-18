@@ -294,6 +294,63 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  function buildAgentBatScript(agent) {
+    if (!agent) return ''
+    let healthUrl = agent.endpoint
+    try {
+      healthUrl = `${new URL(agent.endpoint).origin}/api/health`
+    } catch {
+      // fallback
+    }
+    const safeSample = String(agent.sample || '').replace(/"/g, '\\"')
+    return `@echo off
+setlocal EnableDelayedExpansion
+title ${agent.name} - Enterprise AI Agent Runner
+echo ============================================================
+echo   ${agent.name} (${agent.role})
+echo   Endpoint: ${agent.endpoint}
+echo ============================================================
+echo.
+
+set "${agent.name}_API_ENDPOINT=${agent.endpoint}"
+set "AWS_REGION=us-east-1"
+
+echo [1/3] Checking live API health...
+curl -s "${healthUrl}"
+echo.
+echo.
+
+echo [2/3] Sending sample request to ${agent.name}...
+set "USER_INPUT=${safeSample}"
+set /p "CUSTOM_INPUT=Press ENTER to run sample, or type your own text: "
+if not "%CUSTOM_INPUT%"=="" set "USER_INPUT=%CUSTOM_INPUT%"
+
+curl -s -X POST "${agent.endpoint}" ^
+  -H "Content-Type: application/json" ^
+  -d "{\\"${agent.field}\\": \\"%USER_INPUT%\\"}"
+echo.
+echo.
+
+echo [3/3] Opening ${agent.name} Live Workspace in browser...
+start "" "${agent.live_url}"
+echo Done!
+pause
+`
+  }
+
+  function handleDownloadBat(agent) {
+    const content = buildAgentBatScript(agent)
+    const blob = new Blob([content.replace(/\r?\n/g, '\r\n')], { type: 'application/x-bat;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `run_${agent.id}_app.bat`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
+
   function copyText(text, key) {
     if (!text) return
     navigator.clipboard.writeText(text).then(() => {
@@ -608,12 +665,19 @@ export default function App() {
                   <small>Version 1.0.0 · Python 3.9+ · Standalone Client + Quickstart Demo</small>
                 </div>
                 <div className="downloadBtnGroup">
-                  <a
+                  <button
+                    type="button"
                     className="btnDownloadPrimary"
+                    onClick={() => handleDownloadBat(guideAgent)}
+                  >
+                    Download Runner (.bat) ↓
+                  </button>
+                  <a
+                    className="btnDownloadSecondary"
                     href={`downloads/${guideAgent.id}-agent-1.0.0-sdk-bundle.zip`}
                     download
                   >
-                    Download SDK Bundle (.zip) ↓
+                    SDK Bundle (.zip)
                   </a>
                   <a
                     className="btnDownloadSecondary"
