@@ -1213,18 +1213,17 @@ a {
 
 .cardTitleRow {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 6px;
+  justify-content: flex-start;
+  row-gap: 3px;
+  column-gap: 6px;
   width: 100%;
 }
 
 .cardTitleRow b {
   white-space: nowrap;
-  overflow: visible;
-  text-overflow: clip;
-  flex: 1 1 auto;
-  min-width: 0;
+  flex: 0 0 auto;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.3px;
