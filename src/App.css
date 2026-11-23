@@ -109,8 +109,8 @@ a {
 /* Category Filters */
 .cats {
   display: flex;
-  gap: 7px;
-  padding: 18px 0 14px;
+  gap: 8px;
+  padding: 18px 0 26px;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -344,7 +344,19 @@ a {
   line-height: 1.35;
 }
 
-/* Slider Controls */
+/* Slider Controls & Carousel Footer */
+.carouselFooter {
+  display: contents;
+}
+
+.controlsWrap {
+  display: contents;
+}
+
+.slideCounter {
+  display: none;
+}
+
 .controls {
   position: absolute;
   right: 20px;
@@ -393,11 +405,19 @@ a {
 }
 
 .dot.on {
-  width: 30px;
+  width: 32px;
   background: #078cff;
 }
 
-/* Ribbon Section */
+.wsMobileLabel {
+  display: none;
+}
+
+.wsDesktopLabel {
+  display: inline;
+}
+
+/* Ribbon Section — Classic Connected Agent Ribbon */
 .head {
   display: flex;
   justify-content: space-between;
@@ -472,7 +492,8 @@ a {
   transition: 0.25s;
 }
 
-.card:hover:before, .card.active:before {
+.card:hover:before,
+.card.active:before {
   height: 40px;
   opacity: 0.9;
   box-shadow: 0 0 13px rgba(7, 140, 255, 0.7);
@@ -480,6 +501,13 @@ a {
 
 .card .agentText {
   width: 100%;
+}
+
+.card .cardTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 .card b {
@@ -511,7 +539,8 @@ a {
   transition: opacity 0.2s, color 0.2s;
 }
 
-.card:hover .cardAction {
+.card:hover .cardAction,
+.card.active .cardAction {
   opacity: 1;
   color: #7acbff;
 }
@@ -1060,9 +1089,9 @@ a {
   right: 0 !important;
   bottom: 0 !important;
   width: 100vw !important;
-  height: 100vh !important;
+  height: 100dvh !important;
   max-width: 100vw !important;
-  max-height: 100vh !important;
+  max-height: 100dvh !important;
   margin: 0 !important;
   padding: 0 !important;
   border-radius: 0 !important;
@@ -1287,8 +1316,9 @@ a {
 
 .workspaceFrameContainer {
   width: 100%;
-  height: calc(100vh - 46px) !important;
-  flex: 1;
+  height: auto !important;
+  flex: 1 1 auto;
+  min-height: 0;
   position: relative;
   background: #020c16;
   margin: 0;
@@ -1373,13 +1403,13 @@ a {
   display: none;
   font-size: 8px;
   font-weight: 800;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.45px;
   text-transform: uppercase;
   color: #94a3b8;
-  background: rgba(148, 163, 184, 0.16);
+  background: rgba(148, 163, 184, 0.12);
   border: 1px solid rgba(148, 163, 184, 0.35);
-  padding: 1px 5px;
-  border-radius: 4px;
+  padding: 2px 6px;
+  border-radius: 99px;
   white-space: nowrap;
   flex-shrink: 0;
   pointer-events: none;
@@ -1398,7 +1428,355 @@ a {
 }
 
 .underReviewCard {
-  border-bottom: 2px solid rgba(148, 163, 184, 0.35) !important;
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+/* ======================================================== */
+/* CUSTOM END-TO-END MOBILE RESPONSIVE DESIGN (<= 768px)    */
+/* ======================================================== */
+@media (max-width: 768px) {
+  .shell {
+    padding: 0 12px 28px !important;
+  }
+
+  .top {
+    padding: 14px 0 12px !important;
+  }
+
+  .cats {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 8px !important;
+    padding: 10px 0 22px !important;
+  }
+  .cats::-webkit-scrollbar {
+    display: none;
+  }
+  .cats button {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* Carousel Mobile Layout & Sleek Footer Controls */
+  .feature {
+    border-radius: 18px !important;
+    min-height: 0 !important;
+  }
+  .track {
+    min-height: 0 !important;
+  }
+  .slide {
+    grid-template-columns: 1fr !important;
+    min-height: 0 !important;
+    padding: 20px 18px 18px !important;
+    gap: 14px !important;
+  }
+  .slide h2 {
+    font-size: 28px !important;
+  }
+  .slide p {
+    font-size: 13px !important;
+    margin: 8px 0 12px !important;
+  }
+  .actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px !important;
+  }
+  .actions button,
+  .actions a {
+    justify-content: center;
+    padding: 10px 10px !important;
+    font-size: 10.5px !important;
+    text-align: center;
+  }
+  .carouselFooter {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 10px 16px 14px !important;
+    gap: 10px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+    background: rgba(2, 12, 22, 0.28) !important;
+  }
+  .controlsWrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    flex-shrink: 0 !important;
+  }
+  .slideCounter {
+    display: inline-block !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px !important;
+    color: #7ea5c4 !important;
+    font-variant-numeric: tabular-nums !important;
+  }
+  .controls {
+    position: static !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+  .dots {
+    position: static !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+    max-width: 52%;
+  }
+  .dot {
+    width: 8px !important;
+    height: 4px !important;
+    border-radius: 99px !important;
+  }
+  .dot.on {
+    width: 20px !important;
+  }
+  .controls button {
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 999px !important;
+    border: 1px solid rgba(56, 189, 248, 0.32) !important;
+    background: rgba(5, 26, 44, 0.85) !important;
+    color: #cde8fb !important;
+  }
+
+  /* Custom Mobile Agent Ribbon: Sleek 2-Column Luxury Glass Cards */
+  .ribbon {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 9px !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+  .ribbon .card,
+  .ribbon .card:hover,
+  .ribbon .card.active {
+    flex: none !important;
+    min-width: 0 !important;
+    min-height: 82px !important;
+    padding: 12px 12px 28px 14px !important;
+    border-radius: 14px !important;
+    border: 1px solid rgba(32, 86, 128, 0.55) !important;
+    background: linear-gradient(155deg, rgba(8, 34, 56, 0.94), rgba(3, 16, 29, 0.98)) !important;
+    box-shadow: inset 0 1px 0 rgba(125, 211, 252, 0.12), 0 8px 20px rgba(0, 0, 0, 0.34) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    gap: 3px !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  .ribbon .card:last-child:nth-child(odd) {
+    grid-column: 1 / -1 !important;
+    min-height: 74px !important;
+  }
+  .ribbon .card:before {
+    display: block !important;
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 14px !important;
+    bottom: 14px !important;
+    width: 3px !important;
+    height: auto !important;
+    border-radius: 0 3px 3px 0 !important;
+    background: rgba(56, 189, 248, 0.28) !important;
+    opacity: 1 !important;
+  }
+  .ribbon .card.active {
+    background: radial-gradient(circle at 90% 10%, rgba(7, 140, 255, 0.22), transparent 60%),
+                linear-gradient(155deg, rgba(10, 44, 74, 0.98), rgba(4, 21, 38, 0.98)) !important;
+    border-color: #078cff !important;
+    box-shadow: inset 0 1px 0 rgba(125, 211, 252, 0.22), 0 10px 24px rgba(7, 140, 255, 0.22) !important;
+  }
+  .ribbon .card.active:before {
+    background: #38bdf8 !important;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.85) !important;
+  }
+  .ribbon .card .agentText {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  .ribbon .card .cardTitleRow {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 5px !important;
+    width: 100% !important;
+  }
+  .ribbon .card b {
+    font-size: 13.5px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.35px !important;
+    color: #ffffff !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .ribbon .underReviewPill {
+    display: inline-flex !important;
+    font-size: 6.5px !important;
+    padding: 1.5px 5px !important;
+    letter-spacing: 0.3px !important;
+    line-height: 1.2 !important;
+    flex-shrink: 0 !important;
+  }
+  .ribbon .card .agentRole {
+    display: block !important;
+    font-size: 10.5px !important;
+    line-height: 1.35 !important;
+    color: #8ab4d0 !important;
+    text-transform: none !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    margin-top: 3px !important;
+  }
+  .ribbon .card .cardAction {
+    display: inline-flex !important;
+    position: absolute !important;
+    left: 14px !important;
+    bottom: 9px !important;
+    font-size: 8.5px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.8px !important;
+    color: #60b8f7 !important;
+    opacity: 0.85 !important;
+  }
+  .ribbon .card.active .cardAction {
+    color: #bae6fd !important;
+    opacity: 1 !important;
+  }
+
+  /* Instant single-tap responsiveness on iOS / touch devices (prevent Safari hover-consumes-first-tap bug) */
+  html, body, button, a, [role="button"], .card, .cat, .dot, .controls button, .ribbon {
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  .card, button, a, [role="button"] {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .card::before, .card::after {
+    pointer-events: none !important;
+  }
+  .card:hover {
+    transform: none !important;
+  }
+  .card:active {
+    transform: scale(0.98) !important;
+    transition: transform 0.08s ease !important;
+  }
+
+  /* Custom Mobile Workspace Top Bar (Native 3-slot bar, ZERO horizontal scroll) */
+  .workspaceControlBar {
+    display: grid !important;
+    grid-template-columns: auto 1fr auto !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 8px 10px !important;
+    min-height: 50px !important;
+    overflow: hidden !important;
+    background: rgba(3, 18, 31, 0.98) !important;
+    border-bottom: 1px solid #163b58 !important;
+  }
+  .wsDesktopLabel {
+    display: none !important;
+  }
+  .wsMobileLabel {
+    display: inline !important;
+  }
+  .wsLeft {
+    gap: 0 !important;
+  }
+  .wsAgentMeta,
+  .wsDivider,
+  .wsBadge,
+  .wsName,
+  .wsRole,
+  .wsSelectLabel {
+    display: none !important;
+  }
+  .wsBackBtn {
+    padding: 7px 10px !important;
+    font-size: 12px !important;
+    border-radius: 8px !important;
+  }
+  .wsRight {
+    display: contents !important;
+  }
+  .wsSelectorGroup {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+  .wsSelectorGroup select {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    padding: 7px 8px !important;
+    font-size: 12px !important;
+    border-radius: 8px !important;
+  }
+  .wsBtnGroup {
+    gap: 6px !important;
+  }
+  .wsGuideBtn,
+  .wsExtBtn {
+    padding: 7px 9px !important;
+    font-size: 11.5px !important;
+    border-radius: 8px !important;
+  }
+
+  /* Mobile Implementation Guide & Swagger Explorer */
+  .guideHero {
+    padding: 18px 16px !important;
+  }
+  .guideTopNav {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 10px;
+  }
+  .endpointBar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+  .endpointLeft {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .endpointUrl {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 11px !important;
+  }
+  .swaggerHead,
+  .swaggerFieldLabel,
+  .swaggerRespHead {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .actions {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 

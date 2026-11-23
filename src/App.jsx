@@ -162,6 +162,7 @@ export default function App() {
   const [apiTesting, setApiTesting] = useState(false)
   const [apiTestResult, setApiTestResult] = useState(null)
   const timerRef = useRef(null)
+  const touchStartXRef = useRef(null)
 
   const filteredAgents = activeCategory === 'All'
     ? AGENTS
@@ -442,6 +443,19 @@ pause
             className="feature"
             onMouseEnter={pauseTimer}
             onMouseLeave={startTimer}
+            onTouchStart={(e) => {
+              touchStartXRef.current = e.touches?.[0]?.clientX ?? null
+            }}
+            onTouchEnd={(e) => {
+              const startX = touchStartXRef.current
+              const endX = e.changedTouches?.[0]?.clientX ?? null
+              touchStartXRef.current = null
+              if (startX !== null && endX !== null) {
+                const diff = startX - endX
+                if (diff > 45) handleNext()
+                else if (diff < -45) handlePrev()
+              }
+            }}
           >
             <div
               className="track"
@@ -500,25 +514,39 @@ pause
               ))}
             </div>
 
-            {/* Pagination Dots */}
-            <div className="dots">
-              {filteredAgents.map((_, i) => (
-                <span
-                  key={i}
-                  className={`dot ${i === safeIndex ? 'on' : ''}`}
-                  onClick={() => {
-                    pauseTimer()
-                    setCurrentIndex(i)
-                    startTimer()
-                  }}
-                />
-              ))}
-            </div>
+            {/* Clean Carousel Footer Bar: Dots + Slide Counter + Sleek SVG Prev/Next Controls */}
+            <div className="carouselFooter">
+              <div className="dots">
+                {filteredAgents.map((_, i) => (
+                  <span
+                    key={i}
+                    className={`dot ${i === safeIndex ? 'on' : ''}`}
+                    onClick={() => {
+                      pauseTimer()
+                      setCurrentIndex(i)
+                      startTimer()
+                    }}
+                  />
+                ))}
+              </div>
 
-            {/* Slider Controls */}
-            <div className="controls">
-              <button type="button" onClick={handlePrev} aria-label="Previous agent">‹</button>
-              <button type="button" onClick={handleNext} aria-label="Next agent">›</button>
+              <div className="controlsWrap">
+                <span className="slideCounter">
+                  {String(safeIndex + 1).padStart(2, '0')} / {String(filteredAgents.length).padStart(2, '0')}
+                </span>
+                <div className="controls">
+                  <button type="button" onClick={handlePrev} aria-label="Previous agent">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                  </button>
+                  <button type="button" onClick={handleNext} aria-label="Next agent">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
           </section>
 
@@ -573,7 +601,8 @@ pause
                 type="button"
                 title="Return to AI Agents Store"
               >
-                ← Back to Store
+                <span className="wsDesktopLabel">← Back to Store</span>
+                <span className="wsMobileLabel">← Store</span>
               </button>
               <div className="wsDivider" />
               <div className="wsAgentMeta">
@@ -587,6 +616,7 @@ pause
               <div className="wsSelectorGroup">
                 <span className="wsSelectLabel">Switch Agent:</span>
                 <select
+                  aria-label="Switch AI Agent"
                   value={activeWorkspaceAgent.id}
                   onChange={e => {
                     const found = AGENTS.find(a => a.id === e.target.value)
@@ -607,7 +637,8 @@ pause
                   type="button"
                   onClick={() => handleOpenGuide(activeWorkspaceAgent)}
                 >
-                  Implementation Guide
+                  <span className="wsDesktopLabel">Implementation Guide</span>
+                  <span className="wsMobileLabel">Guide</span>
                 </button>
 
                 <a
@@ -617,7 +648,8 @@ pause
                   rel="noopener noreferrer"
                   title={`Open ${activeWorkspaceAgent.name} in a separate tab`}
                 >
-                  Open Standalone ↗
+                  <span className="wsDesktopLabel">Open Standalone ↗</span>
+                  <span className="wsMobileLabel">↗</span>
                 </a>
               </div>
             </div>
