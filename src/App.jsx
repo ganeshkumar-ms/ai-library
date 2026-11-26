@@ -567,7 +567,6 @@ pause
                 role="button"
                 tabIndex={0}
                 className={`card ${idx === safeIndex ? 'active' : ''} ${agent.under_review ? 'underReviewCard' : ''}`}
-                title={agent.under_review ? `${agent.name} (Under Review)` : agent.name}
                 onClick={() => handleLaunchWorkspace(agent)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
